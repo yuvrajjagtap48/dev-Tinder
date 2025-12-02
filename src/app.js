@@ -5,9 +5,11 @@ const app = express();
 const { validateSignupData } = require("./utils/validation");
 const User = require("./models/user"); // User model
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 app.use(express.json()); // middleware to read json data we just define once it will work for all routes
 // If i give app.use(()=>) it will work for all the routes
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
   try {
@@ -39,15 +41,20 @@ app.post("/signup", async (req, res) => {
 //login
 app.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { emailId, password } = req.body;
 
     const user = await User.findOne({ emailId : emailId });
     if (!user) {
-        throw new Error ("User not found with this email : " + emailId);
+        throw new Error ("Invalid Credentials");
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
+      // createJWTToken(user._id);
+
+
+      // Add the token to cookie and send reponse back to user
+      res.cookie("token", "dsfsgfsgsgsg");
         res.send("User logged in successfully");
     } else {
         throw new Error ("Invalid password ");
@@ -56,6 +63,14 @@ app.post("/login", async (req, res) => {
   }catch (err) {   
     res.status(400).send("ERROR: " + err.message);
     }
+});
+
+
+
+app.get("/profile", (req, res) => {
+  const cookies = req.cookies;
+  console.log(cookies);
+  res.send("User Profile Data");
 });
 
 // Feed API - Get all the users from database
