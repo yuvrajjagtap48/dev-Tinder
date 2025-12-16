@@ -6,6 +6,7 @@ const { validateSignupData } = require("./utils/validation");
 const User = require("./models/user"); // User model
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
+const jwt = requrie("jsonwebtoken");
 
 app.use(express.json()); // middleware to read json data we just define once it will work for all routes
 // If i give app.use(()=>) it will work for all the routes
@@ -50,10 +51,11 @@ app.post("/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
-      // createJWTToken(user._id);
+      //create a JWT Token 
 
 
-      // Add the token to cookie and send reponse back to user
+      //Add the token to cookie and send the response back to user 
+
       res.cookie("token", "dsfsgfsgsgsg");
         res.send("User logged in successfully");
     } else {
