@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcrypt"); 
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -47,8 +50,30 @@ const userSchema = new mongoose.Schema(
     about: { type: String, default: "defult info" },
     skills: { type: [String] },
   },
-  { timestamps: true } // this will add createdAt and updatedAt fields automatically
+  { 
+    timestamps: true 
+  } // this will add createdAt and updatedAt fields automatically
 );
+
+userSchema.methods.getJWT = async function () {  // dont use arrow function here otherwise it break things up beacuse we use this over there
+  const user = this;  
+  const token = await jwt.sign({ _id: user._id }, "DEV@Tinder", {
+      expiresIn : "7d",
+    });
+  return token;    
+
+};
+
+userSchema.methods.validatePassword = async function (passwordInputByUser) {
+  const user = this;
+  const passwordHash = user.password; 
+
+  const isPasswordValid = await bcrypt.compare(
+    passwordInputByUser, 
+     passwordHash
+    ); 
+     return isPasswordValid;
+}
 
 // always write first letter of model name in capital letter
 module.exports = mongoose.model("User", userSchema);
