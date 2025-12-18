@@ -7,6 +7,8 @@ const User = require("./models/user"); // User model
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const jwt = requrie("jsonwebtoken");
+const { userAuth } = require("./middlewares/auth");
+
 
 app.use(express.json()); // middleware to read json data we just define once it will work for all routes
 // If i give app.use(()=>) it will work for all the routes
@@ -53,10 +55,13 @@ app.post("/login", async (req, res) => {
     if (isPasswordValid) {
       //create a JWT Token 
 
+    const token = await  jwt.sign({ _id: user._id }, "DEV@Tinder");
+    console.log(token);
+
 
       //Add the token to cookie and send the response back to user 
 
-      res.cookie("token", "dsfsgfsgsgsg");
+      res.cookie("token", token);
         res.send("User logged in successfully");
     } else {
         throw new Error ("Invalid password ");
@@ -69,11 +74,19 @@ app.post("/login", async (req, res) => {
 
 
 
-app.get("/profile", (req, res) => {
-  const cookies = req.cookies;
-  console.log(cookies);
-  res.send("User Profile Data");
+app.get("/profile",userAuth, async (req, res) => {
+try{
+  const user = req.user;
+  if(!user){
+    throw new Error ("User does not exist");
+  }
+  res.send(user);
+} catch (err){
+  res.status(400).send("ERROR "+ err.message);
+}
 });
+
+
 
 // Feed API - Get all the users from database
 app.get("/feed", async (req, res) => {
