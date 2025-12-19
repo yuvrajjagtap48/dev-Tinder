@@ -8,21 +8,17 @@
 
 ## profileRouter
 - GET /profile/view
-- PATCH /profile/edit
-- PATCH /profile/password
+- PATCH /profile/edit 
+- PATCH /profile/password            //forgot password API
 
 
 ## conncetionRequestRouter
-- POST /request/send/intersted/:userId
-- POST /request/send/ignored/:userId
-- POST /request/review/accepted/:requestId
-- POST /request/review/rejected/:requestId
+- POST /request/send/:status/:userId  =>  (Status : ignore, intersted, accepeted, rejected)
+- POST /request/review/:status/:requestId  => (status: accepted,rejected)
 
 
 ## userRouter
 -GET /user/connections
--GET /user/requests
+-GET /user/requests/received
 -GEt /user/feed  - Gets you the profiles of other users on platform 
 
-
-Status : ignore, intersted, accepeted, rejected

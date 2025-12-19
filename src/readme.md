@@ -83,3 +83,33 @@
 - create routes folder for managing auth,profile,request routers
 - create authRouter, profileRouter, requestRouter
 - Import these routes in app.js
+- Create  POST /logout API
+- create PATCH /profile/edit
+- Create PATCH /profile/password API => forgot password API
+- Make you validate 
+- all data in every POST, PATCH APIs
+
+- Create ConnectionRequestSchema 
+- send Connection request API
+- Proper validation of Data
+- Think about all corner case to not get hacked
+- $or query $and query in mongoose
+- schema.pre("save") function 
+- Read about indexes in MongoDB
+- Why do we need index DB?
+- What is the advantages and disadvantages of creating index? 
+- Read arcticle about compound indexes 
+## ALWAYS THINK ABOUT CORNER CASES
+
+
+- write code for /request/review/:status/:requestId API 
+- Thought process - POST vs GET
+- ref and populate 
+- Create GET /user/requests/received with all the checks
+- Create GET /user/connections
+
+
+- Logic for GET /feed APT
+- Explore the $nin, $and, $ne and other query operatorators 
+- 
+- .skip() & .limit()
