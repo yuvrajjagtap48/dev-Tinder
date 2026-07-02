@@ -41,9 +41,14 @@ authRouter.post("/signup", async (req, res) => {
 
 authRouter.post("/login", async (req, res) => {
   try {
-    const { emailId, password } = req.body;
+    const { emailId, email, password } = req.body;
 
-    const user = await User.findOne({ emailId: emailId });
+    const loginEmail = emailId || email;
+    if (!loginEmail || !password) {
+      return res.status(400).send("ERROR : Email and password are required");
+    }
+
+    const user = await User.findOne({ emailId: loginEmail });
     if (!user) {
       throw new Error("Invalid credentials");
     }
@@ -68,7 +73,7 @@ authRouter.post("/logout", async (req, res) =>{
     res.cookie("token", null , {
         expires: new Date(Date.now()),
     });
-    res.send("Logout Successfully !! ");
+  res.send("Logout successful");
 });
 
 module.exports = authRouter;

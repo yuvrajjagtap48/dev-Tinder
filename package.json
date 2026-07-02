@@ -14,8 +14,11 @@
   "author": "Yuvraj Jagtap",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.1078.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "date-fns": "^4.4.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.0",

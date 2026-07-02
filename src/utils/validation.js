@@ -1,6 +1,6 @@
 const validator = require("validator");
 
-const validateSignupData = (data) => {
+const validateSignUpData = (req) => {
     const {firstName, lastName, emailId, password } = req.body;
 
     if (!firstName || !lastName) {
@@ -35,4 +35,4 @@ const validateEditProfileData = (req ) =>{
 
 
 
-module.exports = { validateSignupData,  validateEditProfileData };
+module.exports = { validateSignUpData,  validateEditProfileData };

@@ -113,3 +113,4 @@
 - Explore the $nin, $and, $ne and other query operatorators 
 - 
 - .skip() & .limit()
+
